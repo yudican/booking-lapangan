@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   },
   textPrice: {
     fontSize: scaleFont(13),
-    color: 'red',
+    color: '#0652DD',
     fontWeight: 'bold',
   },
   itemContainer: {

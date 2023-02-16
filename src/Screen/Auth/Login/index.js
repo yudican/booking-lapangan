@@ -92,7 +92,7 @@ const Login = ({navigation}) => {
               alignItems: 'center',
             }}>
             <OnPress onPress={() => navigation.navigate('ForgotPassword')}>
-              <Text style={{marginLeft: scaleWidth(1), color: 'red'}}>
+              <Text style={{marginLeft: scaleWidth(1), color: '#0652DD'}}>
                 Lupa Kata Sandi?
               </Text>
             </OnPress>
@@ -109,7 +109,7 @@ const Login = ({navigation}) => {
             }}>
             <Text style={{color: '#000'}}>Belum Punya Akun?</Text>
             <OnPress onPress={() => navigation.navigate('Register')}>
-              <Text style={{marginLeft: scaleWidth(1), color: 'red'}}>
+              <Text style={{marginLeft: scaleWidth(1), color: '#0652DD'}}>
                 Daftar
               </Text>
             </OnPress>

@@ -75,7 +75,11 @@ const Home = ({navigation}) => {
         />
       </View>
       <View
-        style={{flex: 1, backgroundColor: 'red', marginTop: scaleHeight(2)}}>
+        style={{
+          flex: 1,
+          backgroundColor: '#0652DD',
+          marginTop: scaleHeight(2),
+        }}>
         <LapanganJadwal data={lapangan} />
       </View>
     </View>
@@ -104,7 +108,7 @@ const ItemLapangan = ({item, onPress}) => {
           <Image
             source={{uri: item.image}}
             style={{
-              backgroundColor: 'red',
+              backgroundColor: '#0652DD',
               height: scaleHeight(6),
               width: scaleWidth(15),
               borderRadius: scaleHeight(1),
@@ -123,7 +127,7 @@ const ItemLapangan = ({item, onPress}) => {
             </Text>
             <Text
               style={{
-                color: 'red',
+                color: '#0652DD',
                 fontSize: scaleFont(14),
                 fontWeight: 'bold',
               }}>

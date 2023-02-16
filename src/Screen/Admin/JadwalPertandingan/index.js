@@ -74,7 +74,7 @@ const Item = ({item, navigation}) => {
     <View style={style.containerItem}>
       <View style={{flex: 1}}>
         <View style={style.containerItemHeading}>
-          <Text style={[style.titleItem, {color: 'red'}]}>
+          <Text style={[style.titleItem, {color: '#0652DD'}]}>
             {formatDate(new Date(item.tanggal_pertandingan))}{' '}
             {item.jadwal.waktu}
           </Text>

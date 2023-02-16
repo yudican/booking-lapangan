@@ -139,7 +139,7 @@ const Register = ({navigation}) => {
             }}>
             <Text style={{color: '#000'}}>Sudah Punya Akun?</Text>
             <OnPress onPress={() => navigation.navigate('Login')}>
-              <Text style={{marginLeft: scaleWidth(1), color: 'red'}}>
+              <Text style={{marginLeft: scaleWidth(1), color: '#0652DD'}}>
                 Login
               </Text>
             </OnPress>

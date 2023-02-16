@@ -75,7 +75,7 @@ const Item = ({item, navigation}) => {
         <Text style={style.titleItem}>{item.nama}</Text>
         <Text
           style={{
-            color: 'red',
+            color: '#0652DD',
             fontSize: scaleFont(14),
             fontWeight: 'bold',
           }}>

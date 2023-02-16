@@ -6,7 +6,7 @@ import OnPress from '../OnPress';
 const Button = ({
   onPress,
   title = 'Button Text',
-  color = 'red',
+  color = '#0652DD',
   loading = false,
 }) => {
   if (loading) {
@@ -29,7 +29,7 @@ const Button = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
+    backgroundColor: '#0652DD',
     paddingVertical: scaleHeight(1.8),
     borderRadius: scaleHeight(1),
     justifyContent: 'center',

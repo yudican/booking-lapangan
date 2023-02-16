@@ -247,7 +247,7 @@ const DetailLapangan = ({navigation, route}) => {
                         styles.time,
                         {
                           borderColor:
-                            selectedJadwal === item.id ? 'red' : '#eaeaea',
+                            selectedJadwal === item.id ? '#0652DD' : '#eaeaea',
                         },
                       ]}
                       key={index}>
@@ -293,7 +293,7 @@ const DetailLapangan = ({navigation, route}) => {
                       {
                         borderColor:
                           selectedMetodePembayaran === item.id
-                            ? 'red'
+                            ? '#0652DD'
                             : '#eaeaea',
                       },
                     ]}
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
   },
   textPrice: {
     fontSize: scaleFont(13),
-    color: 'red',
+    color: '#0652DD',
     fontWeight: 'bold',
   },
   textDesc: {
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
   time: {
     width: scaleWidth(45),
     borderWidth: 1,
-    borderColor: 'red',
+    borderColor: '#0652DD',
     borderRadius: scaleWidth(1),
     justifyContent: 'center',
     alignItems: 'center',

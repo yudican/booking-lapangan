@@ -26,7 +26,7 @@ const RejectPayment = ({navigation, route}) => {
 
     database()
       .ref(urlRoot)
-      .set({...item, status: 'Pembayaran Ditolak', colorMessage: 'red'})
+      .set({...item, status: 'Pembayaran Ditolak', colorMessage: '#0652DD'})
       .then(() => {
         database()
           .ref(`/notifikasi/${item.user_id}/${uid}`)

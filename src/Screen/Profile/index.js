@@ -64,7 +64,7 @@ const Profile = ({navigation}) => {
               style={{
                 width: scaleWidth(10),
                 height: scaleWidth(10),
-                backgroundColor: 'red',
+                backgroundColor: '#0652DD',
                 borderRadius: scaleWidth(10) / 2,
               }}
             />
