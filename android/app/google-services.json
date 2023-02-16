@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "839843683870",
+    "project_id": "booking-lapangan-b4d71",
+    "storage_bucket": "booking-lapangan-b4d71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839843683870:android:000a957ee45beaa2d8980f",
+        "android_client_info": {
+          "package_name": "com.bookinglapangan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839843683870-gm8ean7m6g5i0apq0i6i75on6i67lmll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGfXz7QD-tbA0pnDXrwfRMIqfBwmQZF7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839843683870-gm8ean7m6g5i0apq0i6i75on6i67lmll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
