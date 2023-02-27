@@ -89,7 +89,7 @@ const Item = ({item, navigation}) => {
             leadingIcon={'pencil'}
             onPress={() => {
               setVisible(false);
-              navigation.navigate('BannerForm', item);
+              navigation.navigate('FormMetodePembayaran', item);
             }}
             title="Update"
           />

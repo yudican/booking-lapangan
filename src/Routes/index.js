@@ -194,7 +194,7 @@ const Routes = () => {
           component={FormMetodePembayaran}
           options={({navigation}) => {
             return {
-              headerTitle: 'Form petode pembayaran',
+              headerTitle: 'Form metode pembayaran',
             };
           }}
         />
