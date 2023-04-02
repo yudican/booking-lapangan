@@ -15,6 +15,7 @@ import {
   scaleWidth,
   showAlert,
 } from '../../utils/helper';
+import {TextInput} from 'react-native-paper';
 
 const DetailLapangan = ({navigation, route}) => {
   const {item} = route.params;
@@ -36,6 +37,8 @@ const DetailLapangan = ({navigation, route}) => {
     lapangan: item,
     status: 'Menunggu Pembayaran',
     colorMessage: '#f0932b',
+    nama_tim_1: null,
+    nama_tim_2: null,
   });
 
   useEffect(() => {
@@ -88,6 +91,8 @@ const DetailLapangan = ({navigation, route}) => {
       lapangan: item,
       status: 'Menunggu Pembayaran',
       colorMessage: '#f0932b',
+      nama_tim_1: null,
+      nama_tim_2: null,
     });
   }, []);
 
@@ -128,6 +133,8 @@ const DetailLapangan = ({navigation, route}) => {
           lapangan: item,
           status: 'Menunggu Pembayaran',
           colorMessage: '#f0932b',
+          nama_tim_1: null,
+          nama_tim_2: null,
         });
         return navigation.navigate('KonfirmasiPembayaran', {
           id: uid,
@@ -151,6 +158,32 @@ const DetailLapangan = ({navigation, route}) => {
         <View style={[styles.content, {marginTop: scaleHeight(1)}]}>
           <Text style={styles.textTitle}>Deskripsi Lapangan</Text>
           <Text style={styles.textDesc}>{item.deskripsi}</Text>
+        </View>
+
+        {/* Detail Tim */}
+        <View style={[styles.content, {marginTop: scaleHeight(1)}]}>
+          <Text style={[styles.textTitle, {paddingBottom: scaleHeight(1)}]}>
+            Input Tim
+          </Text>
+          <TextInput
+            label={'Nama Tim 1'}
+            mode={'outlined'}
+            value={form.nama_tim_1}
+            style={{marginBottom: scaleHeight(2), borderColor: '#ddd'}}
+            onChangeText={value =>
+              setForm(curForm => ({...curForm, nama_tim_1: value}))
+            }
+          />
+
+          <TextInput
+            label={'Nama Tim 2'}
+            mode={'outlined'}
+            value={form.nama_tim_2}
+            style={{marginBottom: scaleHeight(2), borderColor: '#ddd'}}
+            onChangeText={value =>
+              setForm(curForm => ({...curForm, nama_tim_2: value}))
+            }
+          />
         </View>
 
         {/* Tanggal */}

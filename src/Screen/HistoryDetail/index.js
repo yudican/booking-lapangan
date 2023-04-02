@@ -127,6 +127,13 @@ const HistoryDetail = ({navigation, route}) => {
               borderTopWidth: 1,
             }}>
             <ItemList label={'Nomor Pesanan'} value={`#${item.tanggal}`} />
+            {item?.nama_tim_1 && (
+              <ItemList label={'Nama Tim 1'} value={`#${item?.nama_tim_1}`} />
+            )}
+            {item?.nama_tim && (
+              <ItemList label={'Nama Tim 2'} value={`#${item?.nama_tim_2}`} />
+            )}
+
             <ItemList
               label={'Status'}
               value={item?.status}

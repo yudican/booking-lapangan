@@ -8,10 +8,15 @@ import {
   scaleWidth,
 } from '../../../utils/helper';
 import database from '@react-native-firebase/database';
+import {Calendar} from 'react-native-calendars';
+import Entypo from 'react-native-vector-icons/Entypo';
+import OnPress from '../../../Components/OnPress';
 
 const JadwalScreen = ({route}) => {
   const {lapanganId} = route.params;
   const [dataJadwalPertandingan, setDataJadwalPertandingan] = useState([]);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     database()
@@ -24,30 +29,142 @@ const JadwalScreen = ({route}) => {
         }
       });
   }, []);
-  if (dataJadwalPertandingan.length > 0) {
+
+  const items = dataJadwalPertandingan.filter(item => {
+    if (selectedDate) {
+      return formatDate(new Date(item.tanggal_pertandingan)) === selectedDate;
+    }
+
+    return true;
+  });
+
+  if (items.length > 0) {
     return (
-      <ScrollView
-        style={{
-          flex: 1,
-          paddingHorizontal: scaleWidth(2),
-          backgroundColor: '#f5f6fa',
-        }}
-        showsVerticalScrollIndicator={false}>
-        {dataJadwalPertandingan.map((item, index) => (
-          <Item item={item} key={index} />
-        ))}
-      </ScrollView>
+      <View style={{flex: 1, backgroundColor: '#f5f6fa'}}>
+        <OnPress onPress={() => setShowCalendar(!showCalendar)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: scaleWidth(2),
+              backgroundColor: '#fff',
+              marginVertical: scaleHeight(1),
+              marginHorizontal: scaleWidth(2),
+              paddingVertical: scaleHeight(1),
+              borderRadius: scaleWidth(1),
+            }}>
+            <Text
+              style={{
+                color: '#000',
+                fontSize: scaleFont(12),
+                fontWeight: 'bold',
+              }}>
+              {selectedDate || 'Tampilkan Tanggal'}
+            </Text>
+            <Entypo
+              name={selectedDate ? 'circle-with-cross' : 'chevron-down'}
+              color={'#000'}
+              onPress={() => {
+                if (selectedDate) {
+                  return setSelectedDate(null);
+                }
+
+                return setShowCalendar(!showCalendar);
+              }}
+            />
+          </View>
+        </OnPress>
+        {showCalendar && (
+          <View
+            style={{
+              marginHorizontal: scaleWidth(2),
+              borderRadius: scaleWidth(2),
+            }}>
+            <Calendar
+              // Handler which gets executed on day press. Default = undefined
+              onDayPress={({timestamp}) => {
+                setShowCalendar(false);
+                setSelectedDate(formatDate(new Date(timestamp)));
+              }}
+            />
+          </View>
+        )}
+        <ScrollView
+          style={{
+            flex: 1,
+            paddingHorizontal: scaleWidth(2),
+            backgroundColor: '#f5f6fa',
+          }}
+          showsVerticalScrollIndicator={false}>
+          {items.map((item, index) => (
+            <Item item={item} key={index} />
+          ))}
+        </ScrollView>
+      </View>
     );
   }
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+
         backgroundColor: '#fff',
       }}>
-      <Text>Belum Ada Jadwal</Text>
+      <OnPress onPress={() => setShowCalendar(!showCalendar)}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: scaleWidth(2),
+            backgroundColor: '#fff',
+            marginVertical: scaleHeight(1),
+            marginHorizontal: scaleWidth(2),
+            paddingVertical: scaleHeight(1),
+            borderRadius: scaleWidth(1),
+            borderWidth: 1,
+            borderColor: '#eaeaea',
+          }}>
+          <Text
+            style={{
+              color: '#000',
+              fontSize: scaleFont(12),
+              fontWeight: 'bold',
+            }}>
+            {selectedDate || 'Tampilkan Tanggal'}
+          </Text>
+          <Entypo
+            name={selectedDate ? 'circle-with-cross' : 'chevron-down'}
+            color={'#000'}
+            onPress={() => {
+              if (selectedDate) {
+                return setSelectedDate(null);
+              }
+
+              return setShowCalendar(!showCalendar);
+            }}
+          />
+        </View>
+      </OnPress>
+      {showCalendar && (
+        <View
+          style={{
+            marginHorizontal: scaleWidth(2),
+            borderRadius: scaleWidth(2),
+          }}>
+          <Calendar
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={({timestamp}) => {
+              setShowCalendar(false);
+              setSelectedDate(formatDate(new Date(timestamp)));
+            }}
+          />
+        </View>
+      )}
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Belum Ada Jadwal</Text>
+      </View>
     </View>
   );
 };
