@@ -25,6 +25,7 @@ import FormJadwalPertandingan from '../Screen/Admin/JadwalPertandingan/FormJadwa
 import Notification from '../Screen/Notifikasi';
 import NotificationDetail from '../Screen/NotificationDetail';
 import ForgotPassword from '../Screen/Auth/ForgotPassword';
+import SplashScreen from '../Screen/SplashScreen/Index';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +37,11 @@ const Routes = () => {
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
-    if (initializing) setInitializing(false);
+    if (initializing) {
+      setTimeout(() => {
+        setInitializing(false);
+      }, 3000);
+    }
   }
 
   useEffect(() => {
@@ -44,7 +49,20 @@ const Routes = () => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  if (initializing) return null;
+  if (initializing)
+    return (
+      <NavigationContainer>
+        <Stack.Navigator defaultScreenOptions={'SplashScreen'}>
+          <Stack.Screen
+            name="SplashScreen"
+            component={SplashScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
 
   if (!user) {
     return (
@@ -57,6 +75,7 @@ const Routes = () => {
               headerShown: false,
             }}
           />
+
           <Stack.Screen
             name="Register"
             component={Register}
