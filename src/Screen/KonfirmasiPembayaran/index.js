@@ -7,17 +7,21 @@ import uuid from 'react-native-uuid';
 import Button from '../../Components/Botton/Button';
 import ImagePickerForm from '../../Components/ImagePicker';
 import {scaleHeight, scaleWidth} from '../../utils/helper';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const KonfirmasiPembayaran = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [image, setImage] = useState(null);
+  const [typePembayaran, setTypePembayaran] = useState(null);
   const [form, setForm] = useState({
     nama_bank: null,
     nama_rekening: null,
     nominal: null,
     bukti_transfer: null,
+    type_bayar: null,
   });
 
   const handleSelectImage = image => {
@@ -43,6 +47,10 @@ const KonfirmasiPembayaran = ({navigation, route}) => {
       setVisible(true);
       setLoading(false);
       return setMessage('Bukti Transfer harus diisi');
+    } else if (!form.type_bayar) {
+      setVisible(true);
+      setLoading(false);
+      return setMessage('Type Pembayaran harus diisi');
     }
 
     // upload image
@@ -141,6 +149,28 @@ const KonfirmasiPembayaran = ({navigation, route}) => {
             onChangeText={value =>
               setForm(curForm => ({...curForm, nominal: value}))
             }
+          />
+
+          <DropDownPicker
+            style={{marginBottom: scaleHeight(2)}}
+            open={open}
+            value={typePembayaran}
+            items={[
+              {
+                label: 'Bayar DP',
+                value: 'dp',
+              },
+              {
+                label: 'Bayar Lunas',
+                value: 'lunas',
+              },
+            ]}
+            setOpen={e => {
+              setOpen(e);
+            }}
+            setValue={setTypePembayaran}
+            label={'Type Pembayaran'}
+            zIndex={99}
           />
 
           <ImagePickerForm

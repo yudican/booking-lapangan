@@ -60,7 +60,7 @@ const History = ({navigation}) => {
         });
     }
   }, []);
-  console.log(orders, 'orders');
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.container}>
@@ -84,6 +84,7 @@ const History = ({navigation}) => {
 };
 
 const HistoryItem = ({item, onPress}) => {
+  const isPending = item?.konfirmasi?.status === 'pending';
   return (
     <OnPress onPress={onPress}>
       <View style={styles.itemContainer}>
@@ -93,9 +94,9 @@ const HistoryItem = ({item, onPress}) => {
             style={{
               fontSize: scaleFont(12),
               fontWeight: 'bold',
-              color: item.colorMessage,
+              color: isPending ? 'red' : item.colorMessage,
             }}>
-            {item.status}
+            {isPending ? 'Menunggu Dikonfirmasi' : item.status}
           </Text>
         </View>
         <Text style={{fontSize: scaleFont(12), color: '#000'}}>

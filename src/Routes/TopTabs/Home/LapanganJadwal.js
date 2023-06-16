@@ -14,7 +14,7 @@ const LapanganJadwal = ({data}) => {
             name={`${item.nama.replace(' ', '_')}_${index}`}
             options={{tabBarLabel: item.nama}}
             component={JadwalScreen}
-            initialParams={{lapanganId: item.id}}
+            initialParams={{lapanganId: item.id, image: item.image}}
           />
         ))}
       </Tab.Navigator>

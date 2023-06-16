@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   formatDate,
   mapObject,
@@ -8,36 +8,66 @@ import {
   scaleWidth,
 } from '../../../utils/helper';
 import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 import {Calendar} from 'react-native-calendars';
 import Entypo from 'react-native-vector-icons/Entypo';
 import OnPress from '../../../Components/OnPress';
 
 const JadwalScreen = ({route}) => {
-  const {lapanganId} = route.params;
+  const {lapanganId, image} = route.params;
   const [dataJadwalPertandingan, setDataJadwalPertandingan] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const uid = auth().currentUser.uid;
     database()
-      .ref('/lapangan/' + lapanganId)
+      .ref('/user/' + uid)
       .on('value', snapshot => {
         const data = snapshot.val();
         if (data) {
-          const tempData = mapObject(data.jadwal) || [];
-          setDataJadwalPertandingan(tempData);
+          setUser(data);
         }
       });
+
+    if (user?.role === 'member') {
+      database()
+        .ref('/booking/' + uid)
+        .on('value', snapshot => {
+          const data = snapshot.val();
+          if (data) {
+            const tempData = mapObject(data) || [];
+            setDataJadwalPertandingan(tempData);
+          }
+        });
+    } else {
+      database()
+        .ref('/booking')
+        .on('value', snapshot => {
+          const data = snapshot.val();
+          if (data) {
+            const tempData = mapObject(data) || [];
+            const finalData = tempData.map(item => {
+              delete item.id;
+              return mapObject(item);
+            });
+
+            const flattenData = finalData.flat();
+            setDataJadwalPertandingan(flattenData);
+          }
+        });
+    }
   }, []);
 
-  const items = dataJadwalPertandingan.filter(item => {
+  const items2 = dataJadwalPertandingan.filter(item => {
     if (selectedDate) {
-      return formatDate(new Date(item.tanggal_pertandingan)) === selectedDate;
+      return formatDate(new Date(item.tanggal)) === selectedDate;
     }
 
     return true;
   });
-
+  const items = items2.filter(item => item?.lapangan?.id === lapanganId);
   if (items.length > 0) {
     return (
       <View style={{flex: 1, backgroundColor: '#f5f6fa'}}>
@@ -75,6 +105,7 @@ const JadwalScreen = ({route}) => {
             />
           </View>
         </OnPress>
+
         {showCalendar && (
           <View
             style={{
@@ -97,6 +128,23 @@ const JadwalScreen = ({route}) => {
             backgroundColor: '#f5f6fa',
           }}
           showsVerticalScrollIndicator={false}>
+          {image && (
+            <View
+              style={{
+                height: scaleHeight(20),
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+              <Image
+                source={{uri: image}}
+                style={{
+                  height: scaleHeight(20),
+                  width: scaleWidth(95),
+                  borderRadius: scaleHeight(1.5),
+                }}
+              />
+            </View>
+          )}
           {items.map((item, index) => (
             <Item item={item} key={index} />
           ))}
@@ -170,30 +218,43 @@ const JadwalScreen = ({route}) => {
 };
 
 const Item = ({item}) => {
-  return (
-    <View style={style.containerItem}>
-      <View style={{flex: 1}}>
-        <View style={style.containerItemHeading}>
-          <Text style={[style.titleItem, {color: '#0652DD'}]}>
-            {formatDate(new Date(item.tanggal_pertandingan))}{' '}
-            {item.jadwal.waktu}
-          </Text>
-        </View>
+  const isPending = item?.konfirmasi?.status === 'pending';
+  if (item?.tanggal) {
+    return (
+      <View style={style.containerItem}>
+        <View style={{flex: 1}}>
+          <View style={style.containerItemHeading}>
+            <Text style={[style.titleItem, {color: '#0652DD'}]}>
+              {formatDate(new Date(item?.tanggal))} {item?.jadwal?.jam_mulai} -{' '}
+              {item?.jadwal?.jam_selesai}
+            </Text>
+          </View>
 
-        <View style={style.containerItemContent}>
-          <Text style={style.titleItemContent}>{item.nama_tim_1}</Text>
-          <Text style={style.titleItemContent}>{`VS`}</Text>
-          <Text style={style.titleItemContent}>{item.nama_tim_2}</Text>
-        </View>
+          <View style={style.containerItemContent}>
+            <Text style={style.titleItemContent}>{item?.nama_tim_1}</Text>
+            <Text style={style.titleItemContent}>{`VS`}</Text>
+            <Text style={style.titleItemContent}>{item?.nama_tim_2}</Text>
+          </View>
 
-        <View style={style.containerItemHeading}>
-          <Text style={[style.titleItem, {color: 'green'}]}>
-            {item.lapangan.nama}
-          </Text>
+          <View style={style.containerItemHeading}>
+            <Text style={[style.titleItem, {color: 'green'}]}>
+              {item?.lapangan?.nama || '-'}
+            </Text>
+
+            <Text
+              style={[
+                style.titleItem,
+                {color: isPending ? 'red' : item.colorMessage},
+              ]}>
+              {isPending ? 'Menunggu Dikonfirmasi' : item?.status}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
+
+  return null;
 };
 
 const style = StyleSheet.create({

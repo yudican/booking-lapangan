@@ -175,7 +175,7 @@ const DetailLapangan = ({navigation, route}) => {
             }
           />
 
-          <TextInput
+          {/* <TextInput
             label={'Nama Tim 2'}
             mode={'outlined'}
             value={form.nama_tim_2}
@@ -183,7 +183,7 @@ const DetailLapangan = ({navigation, route}) => {
             onChangeText={value =>
               setForm(curForm => ({...curForm, nama_tim_2: value}))
             }
-          />
+          /> */}
         </View>
 
         {/* Tanggal */}
@@ -281,6 +281,7 @@ const DetailLapangan = ({navigation, route}) => {
                         {
                           borderColor:
                             selectedJadwal === item.id ? '#0652DD' : '#eaeaea',
+                          backgroundColor: item.disabled ? '#eee' : '#fff',
                         },
                       ]}
                       key={index}>

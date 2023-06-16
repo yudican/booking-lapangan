@@ -112,6 +112,7 @@ const HistoryDetail = ({navigation, route}) => {
   const canConfirmPayment = item?.konfirmasi && user?.role === 'member';
   const canDeleteOrder = user?.role === 'admin';
   const canConfirmOrder = item?.status === 'Pembayaran Diterima';
+  const isPending = item?.konfirmasi?.status === 'pending';
   return (
     <View style={{flex: 1}}>
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
@@ -136,7 +137,7 @@ const HistoryDetail = ({navigation, route}) => {
 
             <ItemList
               label={'Status'}
-              value={item?.status}
+              value={isPending ? 'Menunggu Dikonfirmasi' : item?.status}
               color={item.colorMessage}
             />
             <ItemList label={'Lapangan'} value={`${item.lapangan.nama}`} />
@@ -144,8 +145,8 @@ const HistoryDetail = ({navigation, route}) => {
               label={'Tanggal'}
               value={formatDate(new Date(item.tanggal))}
             />
-            <ItemList label={'Jam Mulai'} value={item.jadwal.jam_mulai} />
-            <ItemList label={'Jam Selesai'} value={item.jadwal.jam_selesai} />
+            <ItemList label={'Jam Mulai'} value={item?.jadwal?.jam_mulai} />
+            <ItemList label={'Jam Selesai'} value={item?.jadwal?.jam_selesai} />
           </View>
         </View>
 
