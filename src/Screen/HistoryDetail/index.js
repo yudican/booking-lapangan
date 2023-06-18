@@ -109,7 +109,7 @@ const HistoryDetail = ({navigation, route}) => {
   const canApprovePayment =
     item?.konfirmasi?.status === 'pending' && user?.role === 'admin';
 
-  const canConfirmPayment = item?.konfirmasi && user?.role === 'member';
+  const canConfirmPayment = !item?.konfirmasi && user?.role === 'member';
   const canDeleteOrder = user?.role === 'admin';
   const canConfirmOrder = item?.status === 'Pembayaran Diterima';
   const isPending = item?.konfirmasi?.status === 'pending';
@@ -140,6 +140,9 @@ const HistoryDetail = ({navigation, route}) => {
               value={isPending ? 'Menunggu Dikonfirmasi' : item?.status}
               color={item.colorMessage}
             />
+            {item?.type_bayar && (
+              <ItemList label={'Type Bayar'} value={item?.type_bayar} />
+            )}
             <ItemList label={'Lapangan'} value={`${item.lapangan.nama}`} />
             <ItemList
               label={'Tanggal'}

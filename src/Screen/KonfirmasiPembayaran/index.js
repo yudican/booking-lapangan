@@ -168,7 +168,13 @@ const KonfirmasiPembayaran = ({navigation, route}) => {
             setOpen={e => {
               setOpen(e);
             }}
-            setValue={setTypePembayaran}
+            setValue={e => {
+              setTypePembayaran(e);
+              setForm(curForm => ({
+                ...curForm,
+                type_bayar: e === 'lunas' ? 'Bayar Lunas' : 'Bayar DP',
+              }));
+            }}
             label={'Type Pembayaran'}
             zIndex={99}
           />
